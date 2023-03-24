@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:14:46 by dhussain          #+#    #+#             */
-/*   Updated: 2023/03/22 15:50:01 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/03/24 12:11:04 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,23 @@ char	**get_paths(char *envp[])
 
 char	**put_slash_behind(char **paths)
 {
-	int	index;
-	
+	int		index;
+	char	*temp;
+
 	index = 0;
 	while (paths[index])
 	{
-		paths[index] = ft_strjoin(paths[index], "/");
+		temp = paths[index];
+		free(paths[index]);
+		paths[index] = ft_strjoin(temp, "/");
+		if (!paths[index])
+		{
+			free(temp);
+			return (NULL);
+		}
 		index++;
 	}
+	free(temp);
 	return (paths);
 }
 
@@ -118,5 +127,7 @@ char	*get_paths_acces(char **paths, char *argv[], int index_argv)
 		free(str);
 		index++;
 	}
+	if (temp_argv)
+		free_2d_array(temp_argv);
 	return (NULL);
 }

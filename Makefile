@@ -8,10 +8,11 @@ LIBFTLIB	:= $(LIBFT)/libft.a
 
 HEADERS	:=	-I $(LIBFT)
 
-SRC	:=	./srcs/pipex.c \
+SRC	:=	./srcs/main.c \
 		./srcs/free_error.c \
 		./srcs/arguments.c \
 		./srcs/paths_creation.c \
+		./srcs/pipex.c \
 
 OBJ := $(SRC:.c=.o)
 
