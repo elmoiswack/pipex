@@ -6,12 +6,13 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:14:46 by dhussain          #+#    #+#             */
-/*   Updated: 2023/03/24 12:11:04 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/03/27 12:34:46 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 #include <unistd.h>
+#include "../libft/libft.h"
 
 char	**trim_paths(char **paths)
 {

@@ -6,11 +6,12 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 20:35:53 by dhussain          #+#    #+#             */
-/*   Updated: 2023/03/24 12:46:02 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/03/27 15:02:10 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
+#include "../libft/libft.h"
 
 void	filling_struct(char *argv[], char *envp[], t_mainstruct *main_struct)
 {
@@ -51,7 +52,7 @@ int	main(int argc, char *argv[], char *envp[])
 		free_struct(main_struct);
 		error_exit("Error\nFailed to open fd's");
 	}
-	pipe_function(main_struct->fd1, main_struct->fd2, main_struct);
+	parent_process(main_struct, envp);
 	free_struct(main_struct);
 	exit(EXIT_SUCCESS);
 }
