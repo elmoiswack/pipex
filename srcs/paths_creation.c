@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:14:46 by dhussain          #+#    #+#             */
-/*   Updated: 2023/03/27 12:34:46 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/04/02 22:42:46 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,65 +14,13 @@
 #include <unistd.h>
 #include "../libft/libft.h"
 
-char	**trim_paths(char **paths)
+char	*trim_paths(char *str_path)
 {
-	int		index_p;
-	int		index_s;
 	char	*str;
 
-	str = malloc ((ft_strlen(paths[0]) - 5) * sizeof(char));
-	if (!str)
-		return (NULL);
-	index_p = 5;
-	index_s = 0;
-	while (paths[0][index_p])
-	{
-		str[index_s] = paths[0][index_p];
-		index_s++;
-		index_p++;
-	}
-	str[index_s] = '\0';
-	index_s = 0;
-	while (str[index_s])
-	{
-		paths[0][index_s] = str[index_s];
-		index_s++; 
-	}
-	while (paths[0][index_s])
-	{
-		paths[0][index_s] = '\0';
-		index_s++;
-	}
-	free(str);
-	return (paths);
-}
-
-char	**get_paths(char *envp[])
-{
-	int		index;
-	char	*str;
-	char	**paths;
-	
-	index = 0;
-	str = malloc (6 * sizeof(char));
-	if (!str)
-		return (NULL);
-	ft_strlcpy(str, "PATH=", 6);
-	while (envp[index])
-	{
-		if (ft_strncmp(envp[index], str, 5) == 0)
-			break ;
-		index++;
-	}
-	free(str);
-	paths = ft_split(envp[index], ':');
-	if (!paths)
-		return (NULL);
-	paths = trim_paths(paths);
-	if (!paths)
-		return (NULL);
-	paths = put_slash_behind(paths);
-	return (paths);
+	str = ft_substr(str_path, 5, ft_strlen(str_path) - 5);
+	free(str_path);
+	return (str);
 }
 
 char	**put_slash_behind(char **paths)
@@ -83,52 +31,59 @@ char	**put_slash_behind(char **paths)
 	index = 0;
 	while (paths[index])
 	{
-		temp = paths[index];
+		temp = ft_calloc(ft_strlen(paths[index]) + 1, sizeof(char));
+		if (!temp)
+			return (NULL);
+		ft_strlcpy(temp, paths[index], ft_strlen(paths[index]) + 1);
 		free(paths[index]);
 		paths[index] = ft_strjoin(temp, "/");
+		free(temp);
 		if (!paths[index])
-		{
-			free(temp);
 			return (NULL);
-		}
 		index++;
 	}
-	free(temp);
 	return (paths);
 }
 
-char	*get_paths_acces(char **paths, char *argv[], int index_argv)
+char	**get_paths(char *envp[])
 {
 	int		index;
-	int		index_x;
-	char	**temp_argv;
-	char	*str;
+	char	**paths;
 
 	index = 0;
-	index_x = 0;
-	temp_argv = NULL;
-	while (argv[index_argv][index_x] && argv[index_argv][index_x] != ' ')
-		index_x++;
-	if (argv[index_argv][index_x] == ' ')
-		temp_argv = ft_split(argv[index_argv], ' ');
-	while (paths[index])
+	while (envp[index])
 	{
-		if (!temp_argv)
-			str = ft_strjoin(paths[index], argv[index_argv]);
-		else
-			str = ft_strjoin(paths[index], temp_argv[0]);
-		if (!str)
-			return (NULL);
-		if (access(str, F_OK) == 0)
-		{
-			if (temp_argv)
-				free_2d_array(temp_argv);
-			return (str);
-		}
-		free(str);
+		if (ft_strncmp(envp[index], "PATH=", 5) == 0)
+			break ;
 		index++;
 	}
-	if (temp_argv)
-		free_2d_array(temp_argv);
+	if (envp[index] == NULL)
+		return (NULL);
+	paths = ft_split(envp[index], ':');
+	if (!paths)
+		return (NULL);
+	paths[0] = trim_paths(paths[0]);
+	if (!paths)
+		return (NULL);
+	paths = put_slash_behind(paths);
+	return (paths);
+}
+
+char	*get_command_path(char **paths, char *command)
+{
+	int		index;
+	char	*temp;
+
+	index = 0;
+	while (paths[index])
+	{
+		temp = ft_strjoin(paths[index], command);
+		if (!temp)
+			return (NULL);
+		if (access(temp, F_OK | X_OK) == 0)
+			return (temp);
+		free(temp);
+		index++;
+	}
 	return (NULL);
 }

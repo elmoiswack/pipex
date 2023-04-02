@@ -12,7 +12,6 @@ SRC	:=	./srcs/main.c \
 		./srcs/free_error.c \
 		./srcs/arguments.c \
 		./srcs/paths_creation.c \
-		./srcs/pipex.c \
 
 OBJ := $(SRC:.c=.o)
 

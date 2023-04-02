@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:57:00 by dhussain          #+#    #+#             */
-/*   Updated: 2023/03/27 12:35:25 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/04/02 23:15:39 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,36 @@ void	free_2d_array(char **array)
 		y++;
 	}
 	free(array);
-	return ;
 }
 
 void	free_struct(t_mainstruct *mainstruct)
 {
-	if (mainstruct->fd1 != 0)
-		close(mainstruct->fd1);
-	if (mainstruct->fd2 != 0)
-		close(mainstruct->fd2);
 	if (mainstruct->paths)
 		free_2d_array(mainstruct->paths);
 	if (mainstruct->command_1)
 		free_2d_array(mainstruct->command_1);
 	if (mainstruct->command_2)
 		free_2d_array(mainstruct->command_2);
-	if (mainstruct->command_path_1)
-		free(mainstruct->command_path_1);
-	if (mainstruct->command_path_2)
-		free(mainstruct->command_path_2);
 	free(mainstruct);
-	return ;
+}
+
+void	error_exec(char *arg)
+{
+	write(1, "pipex: ", 7);
+	write(1, arg, ft_strlen(arg));
+	write(1, ": command not found", 19);
+	write(1, "\n", 1);
+}
+
+void	error_fork(int *pipes, t_mainstruct *main_struct, int numb)
+{
+	free_struct(main_struct);
+	if (pipes[0] > 0)
+		close(pipes[0]);
+	if (pipes[1] > 0)
+		close(pipes[1]);
+	if (numb == 0)
+		exit(1);
+	if (numb == 1)
+		exit(127);
 }
