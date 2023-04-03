@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:57:00 by dhussain          #+#    #+#             */
-/*   Updated: 2023/04/02 23:15:39 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/04/03 14:18:30 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_2d_array(char **array)
 	free(array);
 }
 
-void	free_struct(t_mainstruct *mainstruct)
+void	free_struct(t_struct *mainstruct)
 {
 	if (mainstruct->paths)
 		free_2d_array(mainstruct->paths);
@@ -47,21 +47,23 @@ void	free_struct(t_mainstruct *mainstruct)
 
 void	error_exec(char *arg)
 {
-	write(1, "pipex: ", 7);
-	write(1, arg, ft_strlen(arg));
-	write(1, ": command not found", 19);
-	write(1, "\n", 1);
+	write(STDERR_FILENO, "pipex: ", 7);
+	write(STDERR_FILENO, arg, ft_strlen(arg));
+	write(STDERR_FILENO, ": command not found\n", 20);
+	return ;
 }
 
-void	error_fork(int *pipes, t_mainstruct *main_struct, int numb)
+int	error_fork(int *pipes, int fd, int exit_numb)
 {
-	free_struct(main_struct);
+	if (fd > 0)
+		close(fd);
 	if (pipes[0] > 0)
 		close(pipes[0]);
 	if (pipes[1] > 0)
 		close(pipes[1]);
-	if (numb == 0)
+	if (exit_numb == 1)
 		exit(1);
-	if (numb == 1)
+	if (exit_numb == 127)
 		exit(127);
+	return (0);
 }

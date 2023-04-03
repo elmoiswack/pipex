@@ -6,14 +6,14 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:36:15 by dhussain          #+#    #+#             */
-/*   Updated: 2023/04/02 22:41:29 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/04/03 14:18:57 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 #include "../libft/libft.h"
 
-int	into_struct(char *argv[], t_mainstruct *mainstruct, char *envp[])
+int	into_struct(char *argv[], t_struct *mainstruct, char *envp[])
 {
 	mainstruct->command_1 = ft_split(argv[2], ' ');
 	if (!mainstruct->command_1)
@@ -27,7 +27,7 @@ int	into_struct(char *argv[], t_mainstruct *mainstruct, char *envp[])
 	return (1);
 }
 
-void	check_argv(char *argv[], t_mainstruct *mainstruct)
+void	check_argv(char *argv[], t_struct *mainstruct)
 {
 	int	index;
 
@@ -44,7 +44,7 @@ void	check_argv(char *argv[], t_mainstruct *mainstruct)
 }
 
 void	argument_checks(int argc, char *argv[], char *envp[],
-				t_mainstruct *mainstruct)
+				t_struct *mainstruct)
 {
 	int	index;
 
