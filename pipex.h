@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 20:32:00 by dhussain          #+#    #+#             */
-/*   Updated: 2023/04/03 14:18:23 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/04/04 16:05:01 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	error_exit(char *str);
 void	free_2d_array(char **array);
 void	free_struct(t_struct *strct);
 void	error_exec(char *arg);
-int		error_fork(int *pipes, int fd, int numb);
+int		error_fork(int *pipes, int fd, int exit_numb, char *argv[]);
 
 //ARGUMENTS
 //arguments.c

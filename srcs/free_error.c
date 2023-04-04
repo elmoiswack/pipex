@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:57:00 by dhussain          #+#    #+#             */
-/*   Updated: 2023/04/03 14:18:30 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/04/04 16:07:18 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,9 @@ void	error_exec(char *arg)
 	write(STDERR_FILENO, "pipex: ", 7);
 	write(STDERR_FILENO, arg, ft_strlen(arg));
 	write(STDERR_FILENO, ": command not found\n", 20);
-	return ;
 }
 
-int	error_fork(int *pipes, int fd, int exit_numb)
+int	error_fork(int *pipes, int fd, int exit_numb, char *argv[])
 {
 	if (fd > 0)
 		close(fd);
@@ -63,6 +62,20 @@ int	error_fork(int *pipes, int fd, int exit_numb)
 		close(pipes[1]);
 	if (exit_numb == 1)
 		exit(1);
+	if (exit_numb == 66)
+	{
+		write(STDERR_FILENO, "pipex: ", 7);
+		write(STDERR_FILENO, argv[1], ft_strlen(argv[1]));
+		write(STDERR_FILENO, ": no such file or directory\n", 28);
+		exit(66);
+	}
+	if (exit_numb == 73)
+	{
+		write(STDERR_FILENO, "pipex: ", 7);
+		write(STDERR_FILENO, argv[4], ft_strlen(argv[4]));
+		write(STDERR_FILENO, ": no such file or directory\n", 28);
+		exit(73);
+	}
 	if (exit_numb == 127)
 		exit(127);
 	return (0);
