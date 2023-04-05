@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:36:15 by dhussain          #+#    #+#             */
-/*   Updated: 2023/04/05 17:44:34 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/04/05 18:06:31 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,6 @@ void	argument_checks(int argc, char *argv[], char *envp[],
 	if (into_struct(argv, mainstruct, envp) == -1)
 	{
 		free_struct(mainstruct);
-		error_exit("Error\nAllocation of commands in struct failed");
+		error_exit("Error\nAllocation of commands/path in struct failed");
 	}
 }
