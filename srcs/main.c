@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 20:35:53 by dhussain          #+#    #+#             */
-/*   Updated: 2023/04/04 16:11:35 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/04/05 17:24:17 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_struct	*strct;
 
+	if (!envp)
+		error_exit("Error\nEnviroment is NULL");
 	strct = ft_calloc(1, sizeof(t_struct));
 	if (!strct)
 		error_exit("Error\nAllocation of struct failed");
